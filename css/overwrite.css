@@ -1,0 +1,149 @@
+/* =============================================
+   overwrite.css
+   Custom styles that override styles.css and
+   Bootstrap. Linked LAST in <head> so these
+   styles take priority (per tutorial).
+   ============================================= */
+
+/* --- Color Variables --- */
+:root {
+    --navy: #0d1b2a;
+    --gold: #c9a84c;
+    --cream: #f5f0e8;
+    --light: #f8f6f2;
+    --mid: #4a5568;
+}
+
+/* --- Body font override --- */
+body {
+    font-family: 'Source Sans 3', 'Open Sans', sans-serif;
+    font-size: 18px;
+    background-color: var(--light);
+    color: var(--navy);
+}
+
+/* --- Paragraph override --- */
+p {
+    font-family: 'Source Sans 3', 'Open Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--mid);
+}
+
+/* --- Navbar override --- */
+#mainNav {
+    background-color: var(--navy);
+}
+
+#mainNav .navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    text-transform: none;
+    letter-spacing: 0.03em;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link:hover {
+    color: var(--gold);
+}
+
+/* --- Masthead / Hero override --- */
+.masthead {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a2744 50%, #0d2333 100%);
+    padding-top: calc(8rem + 57px);
+    padding-bottom: 8rem;
+}
+
+.masthead .site-heading h1,
+.masthead .page-heading h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    color: #ffffff;
+}
+
+.masthead .site-heading .subheading,
+.masthead .page-heading .subheading {
+    font-family: 'Source Sans 3', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
+}
+
+/* --- Section headings override --- */
+.section-heading,
+h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--navy);
+}
+
+/* --- Links override --- */
+a {
+    color: var(--gold);
+}
+
+a:hover {
+    color: var(--navy);
+}
+
+/* --- Lists override --- */
+ul li, ol li {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1rem;
+    color: var(--mid);
+}
+
+/* --- Footer override --- */
+footer .fa-stack .fa-circle {
+    color: var(--navy);
+}
+
+footer .fa-stack:hover .fa-circle {
+    color: var(--gold);
+}
+
+/* --- Contact form button override --- */
+.btn-primary {
+    background-color: var(--navy);
+    border-color: var(--navy);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.6rem 2rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+}
+
+/* --- Form inputs override --- */
+.form-control {
+    border-color: rgba(13, 27, 42, 0.2);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 0.2rem rgba(201, 168, 76, 0.2);
+}
+
+.form-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--navy);
+}

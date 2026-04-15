@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reaction Time Tester - Lucas Brasher</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #0f0f1a;
+            color: #e8e8f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Top nav */
+        #topnav {
+            width: 100%;
+            background-color: #1a1a2e;
+            padding: 0.8rem 2rem;
+            display: flex;
+            gap: 2rem;
+            border-bottom: 2px solid #c9a84c;
+        }
+        #topnav a {
+            color: #c9a84c;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        #topnav a:hover { color: #fff; }
+
+        /* Page title */
+        .page-title {
+            text-align: center;
+            padding: 2.5rem 1rem 1rem;
+        }
+        .page-title h1 {
+            font-family: 'Georgia', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #c9a84c;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .page-title p {
+            color: rgba(255,255,255,0.55);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Game container */
+        #game-container {
+            width: 100%;
+            max-width: 700px;
+            padding: 1rem 1.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Race track display */
+        #track {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #0d2333 100%);
+            border-radius: 12px;
+            border: 2px solid #333355;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Road markings */
+        #track::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0; right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(90deg,
+                #c9a84c 0px, #c9a84c 40px,
+                transparent 40px, transparent 80px);
+            transform: translateY(-50%);
+            opacity: 0.3;
+        }
+
+        #car {
+            width: 70px;
+            height: 36px;
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.2rem;
+            line-height: 1;
+            transition: left 0.08s linear;
+            filter: drop-shadow(0 0 8px rgba(201,168,76,0.5));
+        }
+
+        #finish-line {
+            position: absolute;
+            right: 30px;
+            top: 0; bottom: 0;
+            width: 8px;
+            background: repeating-linear-gradient(
+                180deg,
+                #fff 0px, #fff 10px,
+                #000 10px, #000 20px
+            );
+            opacity: 0.6;
+            border-radius: 2px;
+        }
+
+        /* Lights panel */
+        #lights-panel {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: #16213e;
+            border-radius: 12px;
+            padding: 1.2rem 2rem;
+            border: 1px solid #333355;
+        }
+
+        .light {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background-color: #2a2a3e;
+            border: 3px solid #444466;
+            transition: background-color 0.15s, box-shadow 0.15s;
+        }
+
+        .light.red {
+            background-color: #cc2200;
+            box-shadow: 0 0 20px rgba(204,34,0,0.8), 0 0 40px rgba(204,34,0,0.4);
+            border-color: #ff4422;
+        }
+
+        .light.green {
+            background-color: #00cc44;
+            box-shadow: 0 0 20px rgba(0,204,68,0.8), 0 0 40px rgba(0,204,68,0.4);
+            border-color: #22ff66;
+        }
+
+        /* Status display */
+        #status-box {
+            width: 100%;
+            background: #16213e;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border: 1px solid #333355;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        #status-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e8e8f0;
+        }
+
+        #reaction-display {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #c9a84c;
+            font-family: 'Georgia', serif;
+        }
+
+        #rating-text {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.55);
+            font-style: italic;
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            padding: 0.9rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        button:active { transform: scale(0.97); }
+
+        #btn-start {
+            background-color: #c9a84c;
+            color: #0f0f1a;
+        }
+        #btn-start:hover { background-color: #e8c46a; }
+        #btn-start:disabled { background-color: #555; color: #888; cursor: not-allowed; }
+
+        #btn-go {
+            background-color: #00cc44;
+            color: #0f0f1a;
+            display: none;
+        }
+        #btn-go:hover { background-color: #22ff66; }
+
+        #btn-go.false-start {
+            background-color: #cc2200;
+            color: #fff;
+        }
+
+        /* Leaderboard */
+        #leaderboard {
+            width: 100%;
+            background: #16213e;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            border: 1px solid #333355;
+        }
+
+        #leaderboard h3 {
+            font-family: 'Georgia', serif;
+            color: #c9a84c;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(201,168,76,0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        #scores-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #scores-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.95rem;
+            color: #c8c8d8;
+        }
+
+        #scores-list li:first-child {
+            color: #c9a84c;
+            font-weight: 700;
+        }
+
+        .score-rank { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+        .score-ms { font-family: 'Georgia', serif; color: #c9a84c; }
+        .score-rating { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+
+        /* AI badge */
+        .ai-badge {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+            text-align: center;
+            padding-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="topnav">
+        <a href="scratch.html">← Back to Sim Racing</a>
+        <a href="index.html">Professional Site</a>
+    </div>
+
+    <div class="page-title">
+        <h1>🏁 Reaction Time Tester</h1>
+        <p>When the lights go out — GO! Just like a real race start.</p>
+    </div>
+
+    <div id="game-container">
+
+        <!-- Race track -->
+        <div id="track">
+            <div id="car">🏎️</div>
+            <div id="finish-line"></div>
+        </div>
+
+        <!-- Lights panel -->
+        <div id="lights-panel">
+            <div class="light" id="l1"></div>
+            <div class="light" id="l2"></div>
+            <div class="light" id="l3"></div>
+            <div class="light" id="l4"></div>
+            <div class="light" id="l5"></div>
+        </div>
+
+        <!-- Status -->
+        <div id="status-box">
+            <div id="status-text">Press START to begin your race</div>
+            <div id="reaction-display"></div>
+            <div id="rating-text"></div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-row">
+            <button id="btn-start" onclick="startSequence()">START</button>
+            <button id="btn-go" onclick="pressGo()">GO!</button>
+        </div>
+
+        <!-- Leaderboard -->
+        <div id="leaderboard">
+            <h3>🏆 Your Best Times</h3>
+            <ul id="scores-list">
+                <li style="color:rgba(255,255,255,0.4); font-style:italic;">No times yet — race to set a score!</li>
+            </ul>
+        </div>
+
+        <div class="ai-badge">Built with AI assistance · Lucas Brasher 2025</div>
+
+    </div>
+
+    <script>
+        // Game state
+        let gameState = 'idle'; // idle | sequence | waiting | go | false-start
+        let lightsTimer = null;
+        let goTimer = null;
+        let startTime = null;
+        let scores = [];
+        let lightIndex = 0;
+        const lights = [
+            document.getElementById('l1'),
+            document.getElementById('l2'),
+            document.getElementById('l3'),
+            document.getElementById('l4'),
+            document.getElementById('l5')
+        ];
+        const car = document.getElementById('car');
+        const btnStart = document.getElementById('btn-start');
+        const btnGo = document.getElementById('btn-go');
+        const statusText = document.getElementById('status-text');
+        const reactionDisplay = document.getElementById('reaction-display');
+        const ratingText = document.getElementById('rating-text');
+
+        function resetLights() {
+            lights.forEach(l => {
+                l.className = 'light';
+            });
+        }
+
+        function resetCar() {
+            car.style.left = '30px';
+        }
+
+        function animateCar() {
+            // Animate car across track
+            let pos = 30;
+            const trackWidth = document.getElementById('track').offsetWidth - 110;
+            const interval = setInterval(() => {
+                pos += 12;
+                car.style.left = pos + 'px';
+                if (pos >= trackWidth) {
+                    clearInterval(interval);
+                }
+            }, 16);
+        }
+
+        function getRating(ms) {
+            if (ms < 150) return { text: '⚡ Superhuman! Are you cheating?', color: '#ff44ff' };
+            if (ms < 200) return { text: '🏆 Pro Driver — F1 level reflexes!', color: '#00cc44' };
+            if (ms < 250) return { text: '🥇 Excellent — Top amateur racer', color: '#c9a84c' };
+            if (ms < 300) return { text: '🥈 Good — Solid race start', color: '#88aaff' };
+            if (ms < 400) return { text: '🥉 Average — Keep practicing!', color: '#aaaaaa' };
+            if (ms < 500) return { text: '😅 Slow — You missed the apex', color: '#ff8844' };
+            return { text: '💤 Were you asleep?', color: '#cc4444' };
+        }
+
+        function startSequence() {
+            if (gameState !== 'idle') return;
+            gameState = 'sequence';
+            btnStart.disabled = true;
+            btnGo.style.display = 'inline-block';
+            btnGo.className = '';
+            btnGo.textContent = 'GO!';
+            resetLights();
+            resetCar();
+            reactionDisplay.textContent = '';
+            ratingText.textContent = '';
+            statusText.textContent = 'Watch the lights...';
+            lightIndex = 0;
+
+            // Light up one light at a time every 800ms
+            function lightNext() {
+                if (lightIndex < 5) {
+                    lights[lightIndex].classList.add('red');
+                    lightIndex++;
+                    lightsTimer = setTimeout(lightNext, 800);
+                } else {
+                    // All lights on — wait random 0.5–2.5s then go out
+                    const delay = 500 + Math.random() * 2000;
+                    lightsTimer = setTimeout(() => {
+                        // Lights out — GO!
+                        resetLights();
+                        lights.forEach(l => l.classList.add('green'));
+                        gameState = 'go';
+                        startTime = performance.now();
+                        statusText.textContent = '🟢 LIGHTS OUT — GO GO GO!';
+                        // If player doesn't press within 3s, mark as too slow
+                        goTimer = setTimeout(() => {
+                            if (gameState === 'go') {
+                                gameState = 'idle';
+                                statusText.textContent = 'Too slow! You missed the start window.';
+                                reactionDisplay.textContent = '>3000ms';
+                                ratingText.textContent = '💤 Were you asleep?';
+                                ratingText.style.color = '#cc4444';
+                                resetLights();
+                                btnStart.disabled = false;
+                                btnGo.style.display = 'none';
+                            }
+                        }, 3000);
+                    }, delay);
+                }
+            }
+            lightNext();
+        }
+
+        function pressGo() {
+            if (gameState === 'sequence') {
+                // False start!
+                clearTimeout(lightsTimer);
+                gameState = 'idle';
+                resetLights();
+                btnGo.classList.add('false-start');
+                btnGo.textContent = 'FALSE START!';
+                statusText.textContent = '🚨 FALSE START — Penalty! Wait for lights out.';
+                reactionDisplay.textContent = '';
+                ratingText.textContent = '';
+                setTimeout(() => {
+                    btnGo.style.display = 'none';
+                    btnStart.disabled = false;
+                    statusText.textContent = 'Press START to try again';
+                }, 2000);
+                return;
+            }
+
+            if (gameState === 'go') {
+                clearTimeout(goTimer);
+                const reaction = Math.round(performance.now() - startTime);
+                gameState = 'idle';
+                const rating = getRating(reaction);
+
+                // Update UI
+                statusText.textContent = 'Great launch! 🏁';
+                reactionDisplay.textContent = reaction + 'ms';
+                ratingText.textContent = rating.text;
+                ratingText.style.color = rating.color;
+
+                // Animate car
+                animateCar();
+
+                // Save score
+                scores.push(reaction);
+                scores.sort((a, b) => a - b);
+                updateLeaderboard();
+
+                // Reset for next run
+                setTimeout(() => {
+                    btnGo.style.display = 'none';
+                    btnStart.disabled = false;
+                    resetLights();
+                }, 1500);
+            }
+        }
+
+        function updateLeaderboard() {
+            const list = document.getElementById('scores-list');
+            list.innerHTML = '';
+            const medals = ['🥇', '🥈', '🥉'];
+            scores.slice(0, 8).forEach((score, i) => {
+                const rating = getRating(score);
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${medals[i] || ''} <span class="score-rank">#${i+1}</span></span>
+                    <span class="score-ms">${score}ms</span>
+                    <span class="score-rating">${rating.text.split('—')[0].trim()}</span>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        // Keyboard support — spacebar = GO
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (gameState === 'idle' && !btnStart.disabled) {
+                    startSequence();
+                } else if (gameState === 'sequence' || gameState === 'go') {
+                    pressGo();
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

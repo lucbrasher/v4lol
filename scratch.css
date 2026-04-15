@@ -1,0 +1,237 @@
+/* =============================================
+   scratch.css
+   Custom stylesheet for scratch.html
+   No Bootstrap — written from scratch
+   ============================================= */
+
+/* === 1. Global Reset & Body === */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0f0f1a;
+    color: #e8e8f0;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+/* === 2. Top Navigation Bar === */
+#topnav {
+    background-color: #1a1a2e;
+    padding: 0.8rem 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    border-bottom: 2px solid #c9a84c;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#topnav a {
+    color: #c9a84c;
+    text-decoration: none;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+}
+
+#topnav a:hover {
+    color: #ffffff;
+}
+
+/* === 3. Hero Section === */
+#hero {
+    background-color: #0d1b2a;
+    background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(255,50,50,0.08) 0%, transparent 50%);
+    padding: 6rem 2rem;
+    text-align: center;
+    border-bottom: 3px solid #c9a84c;
+}
+
+#hero h1 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-shadow: 0 0 40px rgba(201,168,76,0.4);
+}
+
+#hero-content .hero-sub {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.65);
+    margin-top: 1rem;
+    font-style: italic;
+}
+
+/* === 4. Main Content Wrapper === */
+#main-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+}
+
+/* === 5. Content Blocks (divs for positioning) === */
+.content-block {
+    background-color: #16213e;
+    border-radius: 10px;
+    padding: 2.5rem 3rem;
+    margin: 2.5rem 0;
+    border-left: 4px solid #c9a84c;
+}
+
+.alt-block {
+    background-color: #1a1a2e;
+    border-left: 4px solid #e05c5c;
+}
+
+/* === 6. Headings === */
+h2 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1.8rem;
+    color: #c9a84c;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+    padding-bottom: 0.5rem;
+}
+
+.alt-block h2 {
+    color: #e05c5c;
+    border-bottom-color: rgba(224,92,92,0.25);
+}
+
+/* === 7. Paragraphs === */
+p {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 1rem;
+    color: #c8c8d8;
+    margin-bottom: 1rem;
+    line-height: 1.85;
+}
+
+/* === 8. Lists === */
+.main-list {
+    margin: 1rem 0 1rem 1.5rem;
+    color: #e8e8f0;
+}
+
+.main-list > li {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+}
+
+.sub-list {
+    margin: 0.5rem 0 0.5rem 1.5rem;
+    list-style-type: circle;
+}
+
+.sub-list li {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 0.93rem;
+    color: #a8a8c0;
+    margin-bottom: 0.25rem;
+}
+
+/* === 9. Images === */
+.img-block {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.img-block img {
+    width: 100%;
+    max-width: 750px;
+    border-radius: 8px;
+    border: 2px solid rgba(201,168,76,0.3);
+}
+
+.caption {
+    font-size: 0.82rem;
+    color: #888899;
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+/* === 10. YouTube Video === */
+.video-wrapper {
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid rgba(201,168,76,0.3);
+}
+
+/* === 11. Anchor Link === */
+.anchor-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #c9a84c;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+.anchor-link:hover {
+    color: #ffffff;
+}
+
+/* === 12. Tableau Wrapper === */
+.tableau-wrapper {
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* === 13. Big CTA Button === */
+.big-btn {
+    display: inline-block;
+    background-color: #c9a84c;
+    color: #0f0f1a;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    margin-top: 1rem;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.big-btn:hover {
+    background-color: #e8c46a;
+    transform: translateY(-2px);
+}
+
+/* === 14. Footer === */
+#footer {
+    background-color: #0a0a12;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(201,168,76,0.2);
+}
+
+#footer a {
+    color: #c9a84c;
+    text-decoration: none;
+}
+
+#footer a:hover {
+    color: #fff;
+}

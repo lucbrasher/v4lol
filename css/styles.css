@@ -1,0 +1,136 @@
+/* =============================================
+   styles.css — Base Clean Blog Styles
+   (Bootstrap template base — do not edit this
+    to change your styles; use overwrite.css)
+   ============================================= */
+
+body {
+    font-family: 'Lora', 'Times New Roman', serif;
+    font-size: 20px;
+    color: #212529;
+}
+
+p {
+    line-height: 1.9;
+    margin: 1.2rem 0;
+}
+
+a {
+    color: #212529;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* --- Navbar --- */
+#mainNav {
+    background-color: #212529;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+#mainNav .navbar-brand {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.0625rem;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.0625rem;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+/* --- Masthead / Hero Header --- */
+.masthead {
+    padding-top: calc(10rem + 57px);
+    padding-bottom: 10rem;
+    background: no-repeat center center;
+    background-color: #6c757d;
+    background-size: cover;
+    background-attachment: scroll;
+}
+
+.masthead .site-heading,
+.masthead .page-heading,
+.masthead .post-heading {
+    color: #fff;
+}
+
+.masthead .site-heading,
+.masthead .page-heading {
+    text-align: center;
+}
+
+.masthead .site-heading h1,
+.masthead .page-heading h1 {
+    font-size: 3rem;
+}
+
+.masthead .site-heading .subheading,
+.masthead .page-heading .subheading {
+    display: block;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-top: 0.625rem;
+}
+
+/* --- Section Headings inside content --- */
+.section-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* --- Lists --- */
+ol, ul {
+    margin: 1.2rem 0 1.2rem 2rem;
+    line-height: 1.9;
+}
+
+ol li, ul li {
+    margin-bottom: 0.4rem;
+}
+
+/* --- Footer --- */
+footer {
+    padding: 3rem 0;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+footer .list-inline {
+    margin: 0;
+    padding: 0;
+}
+
+footer .fa-stack {
+    font-size: 1.5rem;
+}
+
+footer .fa-stack .fa-circle {
+    color: #212529;
+}
+
+footer .fa-stack .fa-inverse {
+    color: #fff;
+}
+
+/* --- Main content spacing --- */
+.container.px-4.px-lg-5 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
